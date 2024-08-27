@@ -1,0 +1,113 @@
+ // Output area
+        JTextArea outputArea = new JTextArea(10, 30);
+        outputArea.setFont(new Font("Roboto", Font.PLAIN, 14));
+        outputArea.setForeground(Color.DARK_GRAY);
+        outputArea.setBackground(new Color(245, 245, 245));
+        outputArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(outputArea);
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.BOTH;
+        mainPanel.add(scrollPane, gbc);
+
+        // Adding panels to the frame
+        frame.add(topPanel, BorderLayout.NORTH);
+        frame.add(mainPanel, BorderLayout.CENTER);
+
+        // Button Actions
+        addButton.addActionListener(e -> {
+            String book = bookField.getText();
+            if (!book.isEmpty()) {
+                library.add(book);
+                outputArea.append("Book added: " + book + "\n");
+                bookField.setText("");
+            }
+        });
+
+        insertButton.addActionListener(e -> {
+            try {
+                int index = Integer.parseInt(indexField.getText());
+                String book = bookField.getText();
+                library.insert(index, book);
+                outputArea.append("Book inserted at index " + index + ": " + book + "\n");
+                bookField.setText("");
+                indexField.setText("");
+            } catch (NumberFormatException | IndexOutOfBoundsException ex) {
+                outputArea.append("Error: Invalid index.\n");
+            }
+        });
+
+        removeButton.addActionListener(e -> {
+            try {
+                int index = Integer.parseInt(indexField.getText());
+                String removedBook = library.remove(index);
+                outputArea.append("Removed book: " + removedBook + "\n");
+                indexField.setText("");
+            } catch (NumberFormatException | IndexOutOfBoundsException ex) {
+                outputArea.append("Error: Invalid index.\n");
+            }
+        });
+
+        getButton.addActionListener(e -> {
+            try {
+                int index = Integer.parseInt(indexField.getText());
+                String book = library.get(index);
+                outputArea.append("Book at index " + index + ": " + book + "\n");
+                indexField.setText("");
+            } catch (NumberFormatException | IndexOutOfBoundsException ex) {
+                outputArea.append("Error: Invalid index.\n");
+            }
+        });
+
+        sizeButton.addActionListener(e -> {
+            int totalBooks = library.size();
+            outputArea.append("Total number of books: " + totalBooks + "\n");
+            if (totalBooks > 0) {
+                outputArea.append("Books in the library:\n");
+                for (int i = 0; i < totalBooks; i++) {
+                    outputArea.append((i + 1) + ". " + library.get(i) + "\n");
+                }
+            } else {
+                outputArea.append("No books in the library.\n");
+            }
+        });
+
+        isEmptyButton.addActionListener(e -> {
+            boolean isEmpty = library.isEmpty();
+            outputArea.append("Library is empty: " + isEmpty + "\n");
+        });
+
+        // Show frame
+        frame.setVisible(true);
+    }
+
+    private JTextField createModernTextField(int columns) {
+        JTextField textField = new JTextField(columns);
+        textField.setFont(new Font("Roboto", Font.PLAIN, 16));
+        textField.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(224, 224, 224)),
+                BorderFactory.createEmptyBorder(5, 10, 5, 10)
+        ));
+        return textField;
+    }
+
+    private JButton createModernButton(String text) {
+        JButton button = new JButton(text);
+        button.setFont(new Font("Roboto", Font.BOLD, 14));
+        button.setBackground(new Color(33, 150, 243));
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
+        button.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(33, 150, 243)),
+                BorderFactory.createEmptyBorder(10, 20, 10, 20)
+        ));
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        return button;
+    }
+
+    public static void main(String[] args) {
+        // Run GUI in the Event Dispatch Thread (EDT)
+        SwingUtilities.invokeLater(LibraryManagementUI::new);
+    }
+}
