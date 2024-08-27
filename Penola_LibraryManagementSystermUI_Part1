@@ -1,0 +1,92 @@
+package LibraryManagementSystem;
+
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class LibraryManagementUI {
+    private LibraryADT<String> library;
+
+    public LibraryManagementUI() {
+        library = new LibraryADT<>();
+        createAndShowGUI();
+    }
+
+    private void createAndShowGUI() {
+        // Main frame
+        JFrame frame = new JFrame("Library Management System");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(800, 600);
+        frame.setLayout(new BorderLayout());
+
+        // Background panel with custom image painting
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10); // Padding
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        // Top panel for title
+        JPanel topPanel = new JPanel();
+        topPanel.setBackground(new Color(33, 150, 243)); // Blue
+        JLabel titleLabel = new JLabel("Library Management System");
+        titleLabel.setForeground(Color.WHITE);
+        titleLabel.setFont(new Font("Roboto", Font.BOLD, 24));
+        topPanel.add(titleLabel);
+
+        // Book label and text field
+        JLabel bookLabel = new JLabel("Book Name:");
+        bookLabel.setFont(new Font("Roboto", Font.PLAIN, 16));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        mainPanel.add(bookLabel, gbc);
+
+        JTextField bookField = createModernTextField(20);
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        mainPanel.add(bookField, gbc);
+
+        // Index label and text field
+        JLabel indexLabel = new JLabel("Index:");
+        indexLabel.setFont(new Font("Roboto", Font.PLAIN, 16));
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        mainPanel.add(indexLabel, gbc);
+
+        JTextField indexField = createModernTextField(5);
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        mainPanel.add(indexField, gbc);
+
+        // Buttons
+        JButton addButton = createModernButton("Add Book");
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        mainPanel.add(addButton, gbc);
+
+        JButton insertButton = createModernButton("Insert Book");
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        mainPanel.add(insertButton, gbc);
+
+        JButton removeButton = createModernButton("Remove Book");
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        mainPanel.add(removeButton, gbc);
+
+        JButton getButton = createModernButton("Get Book");
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        mainPanel.add(getButton, gbc);
+
+        JButton sizeButton = createModernButton("Total Books");
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        mainPanel.add(sizeButton, gbc);
+
+        JButton isEmptyButton = createModernButton("Is Library Empty?");
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        mainPanel.add(isEmptyButton, gbc);
