@@ -1,0 +1,86 @@
+package LibraryManagementSystem;
+
+//File: LibrarySystem.java
+import java.util.Scanner;
+
+public class LibrarySystem {
+ private LibraryADT<String> library;
+
+ public LibrarySystem() {
+     library = new LibraryADT<>();
+ }
+
+ public void run() {
+     Scanner scanner = new Scanner(System.in);
+     boolean exit = false;
+
+     while (!exit) {
+         System.out.println("Library Management System");
+         System.out.println("1. Add Book");
+         System.out.println("2. Insert Book at Index");
+         System.out.println("3. Remove Book");
+         System.out.println("4. Get Book by Index");
+         System.out.println("5. Display Total Number of Books");
+         System.out.println("6. Check if Library is Empty");
+         System.out.println("7. Exit");
+         System.out.print("Choose an option: ");
+
+         int choice = scanner.nextInt();
+         scanner.nextLine(); // Consume newline
+
+         switch (choice) {
+             case 1 -> {
+                 System.out.print("Enter book name: ");
+                 String book = scanner.nextLine();
+                 library.add(book);
+                 System.out.println("Book added.");
+             }
+             case 2 -> {
+                 System.out.print("Enter index: ");
+                 int index = scanner.nextInt();
+                 scanner.nextLine(); // Consume newline
+                 System.out.print("Enter book name: ");
+                 String book = scanner.nextLine();
+                 try {
+                     library.insert(index, book);
+                     System.out.println("Book inserted.");
+                 } catch (IndexOutOfBoundsException e) {
+                     System.out.println("Invalid index.");
+                 }
+             }
+             case 3 -> {
+                 System.out.print("Enter index of book to remove: ");
+                 int index = scanner.nextInt();
+                 try {
+                     String removedBook = library.remove(index);
+                     System.out.println("Removed book: " + removedBook);
+                 } catch (IndexOutOfBoundsException e) {
+                     System.out.println("Invalid index.");
+                 }
+             }
+             case 4 -> {
+                 System.out.print("Enter index of book: ");
+                 int index = scanner.nextInt();
+                 try {
+                     String book = library.get(index);
+                     System.out.println("Book at index " + index + ": " + book);
+                 } catch (IndexOutOfBoundsException e) {
+                     System.out.println("Invalid index.");
+                 }
+             }
+             case 5 -> System.out.println("Total number of books: " + library.size());
+             case 6 -> System.out.println("Library is empty: " + library.isEmpty());
+             case 7 -> exit = true;
+             default -> System.out.println("Invalid option. Please try again.");
+         }
+     }
+
+     scanner.close();
+     System.out.println("Exiting Library Management System.");
+ }
+
+ public static void main(String[] args) {
+     LibrarySystem system = new LibrarySystem();
+     system.run();
+ }
+}
