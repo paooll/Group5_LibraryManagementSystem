@@ -1,0 +1,175 @@
+package LibraryManagementSystem;
+
+import javax.swing.*;
+import java.awt.*;
+
+public class LibraryManagementUI extends JFrame {
+    private LibraryADT<String> library;
+    private JTextField bookField;
+    private JTextField indexField;
+    private JTextArea outputArea;
+
+    // Color palette for modern design
+    private final Color darkBlue = new Color(0x001219);
+    private final Color teal = new Color(0x005f73);
+    private final Color lightTeal = new Color(0x0a9396);
+    private final Color mintGreen = new Color(0x94d2bd);
+
+    /**
+     * Launch the application.
+     */
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            try {
+                LibraryManagementUI frame = new LibraryManagementUI();
+                frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    /**
+     * Create the frame.
+     */
+    public LibraryManagementUI() {
+        setTitle("Library Management System");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 800, 600);
+        getContentPane().setLayout(new BorderLayout(0, 0));
+
+        // Top panel with title
+        JPanel topPanel = new JPanel();
+        topPanel.setBackground(teal);
+        getContentPane().add(topPanel, BorderLayout.NORTH);
+
+        JLabel titleLabel = new JLabel("LIBRARY MANAGEMENT SYSTEM");
+        titleLabel.setForeground(mintGreen);
+        titleLabel.setFont(new Font("Roboto", Font.BOLD, 24));
+        topPanel.add(titleLabel);
+
+        // Main content panel
+        JPanel mainPanel = new JPanel();
+        getContentPane().add(mainPanel, BorderLayout.CENTER);
+        GridBagLayout gbl_mainPanel = new GridBagLayout();
+        gbl_mainPanel.columnWidths = new int[]{0, 0, 0};
+        gbl_mainPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
+        gbl_mainPanel.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+        gbl_mainPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+        mainPanel.setLayout(gbl_mainPanel);
+        mainPanel.setBackground(darkBlue);  // Set background
+
+        // Labels and TextFields for Book and Index
+        JLabel bookLabel = createModernLabel("BOOK NAME:");
+        GridBagConstraints gbc_bookLabel = new GridBagConstraints();
+        gbc_bookLabel.insets = new Insets(10, 10, 10, 10);
+        gbc_bookLabel.anchor = GridBagConstraints.WEST;
+        gbc_bookLabel.gridx = 0;
+        gbc_bookLabel.gridy = 0;
+        mainPanel.add(bookLabel, gbc_bookLabel);
+
+        bookField = createModernTextField(20);
+        GridBagConstraints gbc_bookField = new GridBagConstraints();
+        gbc_bookField.insets = new Insets(10, 10, 10, 10);
+        gbc_bookField.fill = GridBagConstraints.HORIZONTAL;
+        gbc_bookField.gridx = 1;
+        gbc_bookField.gridy = 0;
+        mainPanel.add(bookField, gbc_bookField);
+
+        JLabel indexLabel = createModernLabel("INDEX:");
+        GridBagConstraints gbc_indexLabel = new GridBagConstraints();
+        gbc_indexLabel.insets = new Insets(10, 10, 10, 10);
+        gbc_indexLabel.anchor = GridBagConstraints.WEST;
+        gbc_indexLabel.gridx = 0;
+        gbc_indexLabel.gridy = 1;
+        mainPanel.add(indexLabel, gbc_indexLabel);
+
+        indexField = createModernTextField(5);
+        GridBagConstraints gbc_indexField = new GridBagConstraints();
+        gbc_indexField.insets = new Insets(10, 10, 10, 10);
+        gbc_indexField.fill = GridBagConstraints.HORIZONTAL;
+        gbc_indexField.gridx = 1;
+        gbc_indexField.gridy = 1;
+        mainPanel.add(indexField, gbc_indexField);
+
+        // Buttons
+        JButton addButton = createModernButton("ADD BOOK");
+        GridBagConstraints gbc_addButton = new GridBagConstraints();
+        gbc_addButton.insets = new Insets(10, 10, 10, 10);
+        gbc_addButton.gridx = 0;
+        gbc_addButton.gridy = 2;
+        mainPanel.add(addButton, gbc_addButton);
+
+        JButton insertButton = createModernButton("INSERT BOOK");
+        GridBagConstraints gbc_insertButton = new GridBagConstraints();
+        gbc_insertButton.insets = new Insets(10, 10, 10, 10);
+        gbc_insertButton.gridx = 1;
+        gbc_insertButton.gridy = 2;
+        mainPanel.add(insertButton, gbc_insertButton);
+
+        JButton removeButton = createModernButton("REMOVE BOOK");
+        GridBagConstraints gbc_removeButton = new GridBagConstraints();
+        gbc_removeButton.insets = new Insets(10, 10, 10, 10);
+        gbc_removeButton.gridx = 0;
+        gbc_removeButton.gridy = 3;
+        mainPanel.add(removeButton, gbc_removeButton);
+
+        JButton getButton = createModernButton("GET BOOK");
+        GridBagConstraints gbc_getButton = new GridBagConstraints();
+        gbc_getButton.insets = new Insets(10, 10, 10, 10);
+        gbc_getButton.gridx = 1;
+        gbc_getButton.gridy = 3;
+        mainPanel.add(getButton, gbc_getButton);
+
+        JButton sizeButton = createModernButton("TOTAL BOOKS");
+        GridBagConstraints gbc_sizeButton = new GridBagConstraints();
+        gbc_sizeButton.insets = new Insets(10, 10, 10, 10);
+        gbc_sizeButton.gridx = 0;
+        gbc_sizeButton.gridy = 4;
+        mainPanel.add(sizeButton, gbc_sizeButton);
+
+        JButton isEmptyButton = createModernButton("IS LIBRARY EMPTY?");
+        GridBagConstraints gbc_isEmptyButton = new GridBagConstraints();
+        gbc_isEmptyButton.insets = new Insets(10, 10, 10, 10);
+        gbc_isEmptyButton.gridx = 1;
+        gbc_isEmptyButton.gridy = 4;
+        mainPanel.add(isEmptyButton, gbc_isEmptyButton);
+
+        JButton sortButton = createModernButton("SORT BOOKS");
+        GridBagConstraints gbc_sortButton = new GridBagConstraints();
+        gbc_sortButton.insets = new Insets(10, 10, 10, 10);
+        gbc_sortButton.gridx = 0;
+        gbc_sortButton.gridy = 5;
+        mainPanel.add(sortButton, gbc_sortButton);
+
+        // Output area
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setBorder(BorderFactory.createLineBorder(mintGreen, 2));
+        GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+        gbc_scrollPane.insets = new Insets(10, 10, 10, 10);
+        gbc_scrollPane.fill = GridBagConstraints.BOTH;
+        gbc_scrollPane.gridx = 0;
+        gbc_scrollPane.gridy = 6;
+        gbc_scrollPane.gridwidth = 2;
+        mainPanel.add(scrollPane, gbc_scrollPane);
+
+        outputArea = new JTextArea();
+        outputArea.setFont(new Font("Roboto", Font.PLAIN, 16));
+        outputArea.setForeground(lightTeal);
+        outputArea.setBackground(darkBlue);
+        outputArea.setEditable(false);
+        outputArea.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        scrollPane.setViewportView(outputArea);
+
+        // Initialize LibraryADT
+        library = new LibraryADT<>(String.class);
+
+        // Add button action listeners
+        addButton.addActionListener(e -> addBook());
+        insertButton.addActionListener(e -> insertBook());
+        removeButton.addActionListener(e -> removeBook());
+        getButton.addActionListener(e -> getBook());
+        sizeButton.addActionListener(e -> displayTotalBooks());
+        isEmptyButton.addActionListener(e -> displayIsEmpty());
+        sortButton.addActionListener(e -> sortBooks());
+    }
