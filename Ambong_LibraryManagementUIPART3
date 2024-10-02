@@ -1,0 +1,101 @@
+private void addBook() {
+        String book = bookField.getText();
+        if (!book.isEmpty()) {
+            library.add(book);
+            outputArea.append("BOOK ADDED: " + book.toUpperCase() + "\n");
+            bookField.setText("");
+        }
+    }
+
+    private void insertBook() {
+        try {
+            int index = Integer.parseInt(indexField.getText());
+            String book = bookField.getText();
+            library.insert(index, book);
+            outputArea.append("BOOK INSERTED AT INDEX " + index + ": " + book.toUpperCase() + "\n");
+            bookField.setText("");
+            indexField.setText("");
+        } catch (NumberFormatException | IndexOutOfBoundsException ex) {
+            outputArea.append("ERROR: INVALID INDEX.\n");
+        }
+    }
+
+    private void removeBook() {
+        try {
+            int index = Integer.parseInt(indexField.getText());
+            String removedBook = library.remove(index);
+            outputArea.append("REMOVED BOOK: " + removedBook.toUpperCase() + "\n");
+            indexField.setText("");
+        } catch (NumberFormatException | IndexOutOfBoundsException ex) {
+            outputArea.append("ERROR: INVALID INDEX.\n");
+        }
+    }
+
+    private void getBook() {
+        try {
+            int index = Integer.parseInt(indexField.getText());
+            String book = library.get(index);
+            outputArea.append("BOOK AT INDEX " + index + ": " + book.toUpperCase() + "\n");
+            indexField.setText("");
+        } catch (NumberFormatException | IndexOutOfBoundsException ex) {
+            outputArea.append("ERROR: INVALID INDEX.\n");
+        }
+    }
+
+    private void displayTotalBooks() {
+        int totalBooks = library.size();
+        outputArea.append("TOTAL NUMBER OF BOOKS: " + totalBooks + "\n");
+        if (totalBooks > 0) {
+            outputArea.append("BOOKS IN THE LIBRARY:\n");
+            for (int i = 0; i < totalBooks; i++) {
+                outputArea.append((i + 1) + ". " + library.get(i).toUpperCase() + "\n");
+            }
+        } else {
+            outputArea.append("NO BOOKS IN THE LIBRARY.\n");
+        }
+    }
+
+    private void displayIsEmpty() {
+        boolean isEmpty = library.isEmpty();
+        outputArea.append("LIBRARY IS EMPTY: " + isEmpty + "\n");
+    }
+
+    private void sortBooks() {
+        library.sort();
+        outputArea.append("BOOKS SORTED.\n");
+    }
+
+    private JLabel createModernLabel(String text) {
+        JLabel label = new JLabel(text);
+        label.setFont(new Font("Roboto", Font.BOLD, 16));
+        label.setForeground(mintGreen);
+        label.setHorizontalAlignment(SwingConstants.LEFT);
+        return label;
+    }
+
+    private JTextField createModernTextField(int columns) {
+        JTextField textField = new JTextField(columns);
+        textField.setFont(new Font("Roboto", Font.BOLD, 16));
+        textField.setForeground(darkBlue);
+        textField.setBackground(mintGreen);
+        textField.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(lightTeal, 2),
+                BorderFactory.createEmptyBorder(5, 10, 5, 10)
+        ));
+        return textField;
+    }
+
+    private JButton createModernButton(String text) {
+        JButton button = new JButton(text);
+        button.setFont(new Font("Roboto", Font.BOLD, 14));
+        button.setBackground(teal);
+        button.setForeground(mintGreen);
+        button.setFocusPainted(false);
+        button.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(lightTeal, 2),
+                BorderFactory.createEmptyBorder(10, 20, 10, 20)
+        ));
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        return button;
+    }
+}
